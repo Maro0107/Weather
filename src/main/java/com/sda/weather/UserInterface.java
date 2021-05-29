@@ -36,8 +36,6 @@ public class UserInterface {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Provide location:");
         String location = scanner.nextLine();
-        String httpResponseBody = locationController.createNewLocation(null, null, null, 0, 0);
-        System.out.println("Response from server: " + httpResponseBody);
-        System.out.println();
+         System.out.println();
     }
 }

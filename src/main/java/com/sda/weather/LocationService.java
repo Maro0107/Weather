@@ -1,11 +1,34 @@
 package com.sda.weather;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class LocationService {
 
-    public Location createLocation(String city, String region, String country, float longitude, float latitude) {
+    private LocationRepositoryImpl locationRepositoryImpl;
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    public LocationService(LocationRepositoryImpl locationRepositoryImpl) {
+    }
+
+    public Location createLocation(String city, String country, float latitude, float longitude, String region) {
         // todo valida data
-        //  save new Location to your database (LocationRepository)
-        //  region value is optional
-        return null;
+        if (city == null || city.isBlank()){
+            throw new RuntimeException("The name of city can not be empty");
+        }
+        if (country == null || country.isBlank()){
+            throw new RuntimeException("The name of country can not be empty");
+        }
+        if (latitude < -90 || latitude > 90){
+            throw new IllegalArgumentException("Latitude must be between -90 and 90");
+        }
+        if (longitude < -180 || longitude > 180){
+            throw new IllegalArgumentException("Longitude must be between -180 and 180");
+        }
+        if (region.isBlank()){
+           region=null;
+        }
+        Location location = new Location(null,city,country,latitude,longitude,region);
+
+        return locationRepositoryImpl.save(location);
     }
 }
