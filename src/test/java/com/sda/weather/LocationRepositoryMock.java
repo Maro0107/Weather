@@ -9,7 +9,7 @@ public class LocationRepositoryMock implements LocationRepository {
 
     @Override
     public Location save(Location entry) {
-       // entry.setId(1L);
+        entry.setId(1L);
         entries.add(entry);
         return entry;
     }

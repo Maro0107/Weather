@@ -1,14 +1,20 @@
 package com.sda.weather;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class LocationService {
 
-    private LocationRepositoryImpl locationRepositoryImpl;
+    private final LocationRepository locationRepository;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public LocationService(LocationRepositoryImpl locationRepositoryImpl) {
+    public LocationService(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
+
+//    public LocationService(LocationRepository locationRepository) {
+//    }
 
     public Location createLocation(String city, String country, float latitude, float longitude, String region) {
         // todo valida data
@@ -29,6 +35,6 @@ public class LocationService {
         }
         Location location = new Location(null,city,country,latitude,longitude,region);
 
-        return locationRepositoryImpl.save(location);
+        return locationRepository.save(location);
     }
 }
